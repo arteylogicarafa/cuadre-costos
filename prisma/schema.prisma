@@ -6,8 +6,8 @@ datasource db {
   provider  = "postgresql"
   // Cadena con pool (Neon: host con -pooler) para la aplicación
   url       = env("DATABASE_URL")
-  // Cadena directa, solo para migraciones
-  directUrl = env("DIRECT_URL")
+  // Cadena directa (sin pool), solo para migraciones. Neon la entrega como DATABASE_URL_UNPOOLED
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model Usuario {

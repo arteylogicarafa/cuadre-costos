@@ -9,7 +9,7 @@ Pila: Next.js 16 (App Router), TypeScript, Tailwind CSS 4, Prisma y PostgreSQL (
 ## Desarrollo local
 
 1. Instala dependencias: `npm install`
-2. Copia `.env.example` a `.env` y completa `DATABASE_URL`, `DIRECT_URL` y `SESSION_SECRET`.
+2. Copia `.env.example` a `.env` y completa `DATABASE_URL`, `DATABASE_URL_UNPOOLED` y `SESSION_SECRET`.
    Para desarrollo conviene una rama de desarrollo en Neon, separada de producción.
 3. Crea las tablas: `npm run db:deploy`
 4. Arranca: `npm run dev` y abre http://localhost:3000. Crea tu cuenta en `/registro`.
@@ -18,7 +18,7 @@ Pruebas de los cálculos (costos, nómina, finanzas, importación): `npm test`
 
 ## Despliegue (Vercel + Neon)
 
-- En Vercel define las variables de entorno `DATABASE_URL` (con pool), `DIRECT_URL` (directa) y
+- En Vercel define las variables de entorno `DATABASE_URL` (con pool), `DATABASE_URL_UNPOOLED` (directa) y
   `SESSION_SECRET` (mínimo 32 caracteres aleatorios).
 - El script `vercel-build` aplica las migraciones (`prisma migrate deploy`) antes de compilar.
 - Cambios al modelo de datos: `npm run db:migrate` en local crea la migración; se sube con el código.

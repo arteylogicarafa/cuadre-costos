@@ -2,6 +2,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
+import { cache } from "react";
 import { db } from "./db";
 
 const COOKIE = "sesion";
@@ -40,7 +41,7 @@ export async function requerirNomina() {
 }
 
 /** Lee la sesión y verifica contra la base de datos que el usuario y la membresía siguen existiendo. */
-export async function requerirSesion() {
+async function leerSesion() {
   const token = (await cookies()).get(COOKIE)?.value;
   if (!token) redirect("/login");
   let payload: { usuarioId: string; empresaId: string | null };
@@ -62,3 +63,6 @@ export async function requerirSesion() {
   if (!membresia) redirect("/login");
   return { usuario, empresa: membresia.empresa, rol: membresia.rol };
 }
+
+/** Una sola verificación por petición: el layout y la página la llaman, pero la base se consulta una vez. */
+export const requerirSesion = cache(leerSesion);
