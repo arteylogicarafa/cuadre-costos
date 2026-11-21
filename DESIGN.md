@@ -1,5 +1,5 @@
 ---
-name: Cuadre
+name: Costear
 description: Estructura de costos para pymes venezolanas, con el dinero leído como grabado de billete de bolívar.
 colors:
   accent: "#0f7a3e"
@@ -127,7 +127,7 @@ components:
     padding: "8px 12px"
 ---
 
-# Design System: Cuadre
+# Design System: Costear
 
 ## Overview
 
@@ -243,7 +243,7 @@ Ingresos como área (acento al 16%) y línea de 2.6px que se traza al cargar com
 Pista de píldora en resalte; relleno de segmentos con color de serie (composición, 12px de alto) o acento (margen, 8px de alto, rojo si es negativo, mínimo 2%). Leyenda con cuadrito de 10px y porcentaje tabular alineado a la derecha. El punto de equilibrio añade un marcador vertical de 2px en tinta en la posición de la producción actual.
 
 ### Marca
-Roseta festoneada de dos trazos alrededor de una moneda de acento con una "C" abierta que guarda un punto (el cuadre). Vectorial, usa los roles de acento del tema; el ícono de la app repite la marca sobre #050907. El nombre "Cuadre" va en Bodoni 600 con subtítulo de 0.7rem.
+Roseta festoneada de dos trazos alrededor de una moneda de acento con una "C" abierta que guarda un punto (el cuadre). Vectorial, usa los roles de acento del tema; el ícono de la app repite la marca sobre #050907. El nombre "Costear" va en Bodoni 600 con subtítulo de 0.7rem.
 
 ## Do's and Don'ts
 

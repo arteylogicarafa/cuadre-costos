@@ -42,7 +42,7 @@ export function BarraLateral({
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-sunken/95 px-4 py-2.5 backdrop-blur md:hidden print:hidden">
         <span className="flex items-center gap-2.5">
           <Marca tamano={30} />
-          <span className="text-base font-semibold tracking-tight">Cuadre</span>
+          <span className="text-base font-semibold tracking-tight">Costear</span>
         </span>
         <div className="flex items-center gap-2">
           <SelectorTema compacto />

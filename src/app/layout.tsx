@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cuadre · Estructura de costos",
+  title: "Costear · Estructura de costos",
   description: "Sistema de estructura de costos para empresas",
 };
 

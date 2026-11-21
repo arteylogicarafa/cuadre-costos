@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-20T00:00:00Z",
-  "title": "Design System: Cuadre",
+  "title": "Design System: Costear",
   "extensions": {
     "colorMeta": {
       "accent": { "role": "primary", "displayName": "Tinta de Grabado Verde", "canonical": "#0f7a3e", "tonalRamp": ["#04180c", "#073d1f", "#0a6330", "#0f7a3e", "#2f9a5c", "#6dbd8b", "#b3dcc2", "#e4f3ea"] },

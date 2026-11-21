@@ -1,4 +1,4 @@
-# Cuadre · Estructura de costos
+# Costear · Estructura de costos
 
 Sistema web multiempresa para costear productos: materia prima, insumos, recetas y sub-recetas, costos
 indirectos, activos, nómina (Venezuela), ventas, pagos, estados financieros básicos, simulador de combos,

@@ -3,8 +3,8 @@ import { roseta } from "@/lib/guilloche";
 const capas = roseta(24, 24, 22.5, 2, 1);
 
 /**
- * Marca de Cuadre: una roseta de grabado (anillo festoneado de dos trazos) alrededor de una moneda con una
- * "C" abierta cuyo hueco guarda un punto, el cuadre de cuentas. Vectorial; usa el acento del tema.
+ * Marca de Costear: una roseta de grabado (anillo festoneado de dos trazos) alrededor de una moneda con una
+ * "C" abierta cuyo hueco guarda un punto, la cuenta que cuadra. Vectorial; usa el acento del tema.
  */
 export function Marca({ tamano = 36, className = "" }: { tamano?: number; className?: string }) {
   return (
@@ -13,7 +13,7 @@ export function Marca({ tamano = 36, className = "" }: { tamano?: number; classN
       height={tamano}
       viewBox="0 0 48 48"
       role="img"
-      aria-label="Cuadre"
+      aria-label="Costear"
       className={className}
       fill="none"
     >
@@ -41,7 +41,7 @@ export function Logo({ tamano = 36 }: { tamano?: number }) {
       <Marca tamano={tamano} />
       <span className="leading-none">
         <span className="block font-display text-xl font-semibold tracking-tight text-ink" style={{ fontFamily: "var(--font-display)" }}>
-          Cuadre
+          Costear
         </span>
         <span className="mt-1 block text-[0.7rem] text-ink-3">Estructura de costos</span>
       </span>
