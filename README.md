@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cuadre · Estructura de costos
 
-## Getting Started
+Sistema web multiempresa para costear productos: materia prima, insumos, recetas y sub-recetas, costos
+indirectos, activos, nómina (Venezuela), ventas, pagos, estados financieros básicos, simulador de combos,
+proyecciones con punto de equilibrio e importación y exportación de Excel.
 
-First, run the development server:
+Pila: Next.js 16 (App Router), TypeScript, Tailwind CSS 4, Prisma y PostgreSQL (Neon).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Desarrollo local
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Instala dependencias: `npm install`
+2. Copia `.env.example` a `.env` y completa `DATABASE_URL`, `DIRECT_URL` y `SESSION_SECRET`.
+   Para desarrollo conviene una rama de desarrollo en Neon, separada de producción.
+3. Crea las tablas: `npm run db:deploy`
+4. Arranca: `npm run dev` y abre http://localhost:3000. Crea tu cuenta en `/registro`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Pruebas de los cálculos (costos, nómina, finanzas, importación): `npm test`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Despliegue (Vercel + Neon)
 
-## Learn More
+- En Vercel define las variables de entorno `DATABASE_URL` (con pool), `DIRECT_URL` (directa) y
+  `SESSION_SECRET` (mínimo 32 caracteres aleatorios).
+- El script `vercel-build` aplica las migraciones (`prisma migrate deploy`) antes de compilar.
+- Cambios al modelo de datos: `npm run db:migrate` en local crea la migración; se sube con el código.
 
-To learn more about Next.js, take a look at the following resources:
+## Notas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Las reglas de nómina (IVSS, RPE, FAOV, INCES, topes, recargos) son editables en la pantalla de
+  parámetros y deben revisarse con un contador antes de usarse en producción.
+- Los estados financieros son una vista gerencial, no sustituyen la contabilidad.
+- El sistema trabaja hoy en una sola moneda por empresa.

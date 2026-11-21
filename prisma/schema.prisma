@@ -1,0 +1,278 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Cadena con pool (Neon: host con -pooler) para la aplicación
+  url       = env("DATABASE_URL")
+  // Cadena directa, solo para migraciones
+  directUrl = env("DIRECT_URL")
+}
+
+model Usuario {
+  id          String       @id @default(cuid())
+  correo      String       @unique
+  nombre      String
+  claveHash   String
+  creadoEn    DateTime     @default(now())
+  membresias  Membresia[]
+}
+
+model Empresa {
+  id              String         @id @default(cuid())
+  razonSocial     String
+  rif             String?
+  direccion       String?
+  moneda          String         @default("USD")
+  tasaCambio      Float          @default(1)
+  pctGastosAjenos Float          @default(0.125)
+  pctUtilidad     Float          @default(0.3)
+  pctIva          Float          @default(0.16)
+  creadoEn        DateTime       @default(now())
+  membresias      Membresia[]
+  unidades        UnidadMedida[]
+  materiasPrimas  MateriaPrima[]
+  insumos         Insumo[]
+  productos       Producto[]
+  indirectos      CostoIndirecto[]
+  activos         Activo[]
+  cargos          Cargo[]
+  empleados       Empleado[]
+  paramNomina     ParametroNomina[]
+  ventas          Venta[]
+  pagos           Pago[]
+  cuentas         CuentaContable[]
+}
+
+// Un usuario puede pertenecer a varias empresas con un rol en cada una.
+model Membresia {
+  id         String  @id @default(cuid())
+  usuarioId  String
+  empresaId  String
+  rol        String  @default("ADMIN") // ADMIN | ANALISTA | CONSULTA
+  usuario    Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  empresa    Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, empresaId])
+}
+
+model UnidadMedida {
+  id        String         @id @default(cuid())
+  empresaId String
+  nombre    String
+  abreviatura String
+  empresa   Empresa        @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  materias  MateriaPrima[]
+
+  @@unique([empresaId, nombre])
+}
+
+model MateriaPrima {
+  id               String       @id @default(cuid())
+  empresaId        String
+  codigo           String
+  nombre           String
+  unidadId         String
+  cantidad         Float        // cantidad de la presentación (ej. 1000 g)
+  costoPresentacion Float       // costo de la presentación completa
+  creadoEn         DateTime     @default(now())
+  empresa          Empresa      @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  unidad           UnidadMedida @relation(fields: [unidadId], references: [id])
+  lineas           LineaReceta[]
+
+  @@unique([empresaId, codigo])
+}
+
+// Envases, tapas, etiquetas, servilletas: se cuentan por unidad de producto.
+model Insumo {
+  id                String        @id @default(cuid())
+  empresaId         String
+  nombre            String
+  cantidad          Float
+  costoPresentacion Float
+  empresa           Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  lineas            LineaReceta[]
+
+  @@unique([empresaId, nombre])
+}
+
+model Producto {
+  id                String        @id @default(cuid())
+  empresaId         String
+  codigo            String
+  nombre            String
+  tipo              String        @default("PRINCIPAL") // PRINCIPAL | SUBRECETA
+  area              String?
+  porciones         Float         @default(1)
+  manoObra          Float         @default(0) // costo de mano de obra por unidad (hasta la fase de nómina)
+  produccionMensual Float         @default(0)
+  pctUtilidad       Float?        // si es nulo se usa el de la empresa
+  empresa           Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  lineas            LineaReceta[] @relation("lineasDelProducto")
+  usadoEn           LineaReceta[] @relation("subRecetaUsada")
+  ventas            Venta[]
+
+  @@unique([empresaId, codigo])
+}
+
+// Una línea usa exactamente una de: materia prima, insumo o sub-receta.
+model LineaReceta {
+  id          String        @id @default(cuid())
+  productoId  String
+  materiaId   String?
+  insumoId    String?
+  subRecetaId String?
+  cantidad    Float
+  producto    Producto      @relation("lineasDelProducto", fields: [productoId], references: [id], onDelete: Cascade)
+  materia     MateriaPrima? @relation(fields: [materiaId], references: [id])
+  insumo      Insumo?       @relation(fields: [insumoId], references: [id])
+  subReceta   Producto?     @relation("subRecetaUsada", fields: [subRecetaId], references: [id])
+}
+
+model CostoIndirecto {
+  id           String  @id @default(cuid())
+  empresaId    String
+  categoria    String  // ALQUILER_SERVICIO | PERMISO | UNIFORME | SERVICIO_EXTERNO | OTRO
+  descripcion  String
+  montoMensual Float
+  empresa      Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  pagos        Pago[]
+}
+
+model Activo {
+  id             String  @id @default(cuid())
+  empresaId      String
+  descripcion    String
+  costo          Float
+  valorResidual  Float   @default(0)
+  vidaUtilMeses  Int
+  empresa        Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+}
+
+model Cargo {
+  id         String     @id @default(cuid())
+  empresaId  String
+  nombre     String
+  area       String     @default("PRODUCCION") // PRODUCCION | ADMINISTRACION
+  empresa    Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  empleados  Empleado[]
+
+  @@unique([empresaId, nombre])
+}
+
+model Empleado {
+  id             String    @id @default(cuid())
+  empresaId      String
+  cedula         String
+  nombre         String
+  cargoId        String
+  fechaIngreso   DateTime
+  salarioMensual Float
+  bonoFijo       Float     @default(0) // otros bonos mensuales
+  comision       Float     @default(0) // comisiones mensuales fijas
+  activo         Boolean   @default(true)
+  empresa        Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  cargo          Cargo     @relation(fields: [cargoId], references: [id])
+  novedades      Novedad[]
+
+  @@unique([empresaId, cedula])
+}
+
+// Horas y días variables de un empleado en un mes (periodo = AAAA-MM).
+model Novedad {
+  id             String   @id @default(cuid())
+  empleadoId     String
+  periodo        String
+  horasNocturnas Float    @default(0)
+  horasExtras    Float    @default(0)
+  diasFeriados   Float    @default(0)
+  empleado       Empleado @relation(fields: [empleadoId], references: [id], onDelete: Cascade)
+
+  @@unique([empleadoId, periodo])
+}
+
+// Parámetros legales con fecha de vigencia: un mes pasado se calcula con los valores de su época.
+model ParametroNomina {
+  id                 String   @id @default(cuid())
+  empresaId          String
+  vigenciaDesde      String   // AAAA-MM
+  salarioMinimo      Float
+  bonoAlimentacion   Float
+  pctRiesgoIvss      Float    @default(0.09)
+  pctIvssTrab        Float    @default(0.04)
+  pctRpeTrab         Float    @default(0.005)
+  pctRpePatrono      Float    @default(0.02)
+  pctFaovTrab        Float    @default(0.01)
+  pctFaovPatrono     Float    @default(0.02)
+  pctIncesTrab       Float    @default(0.005)
+  pctIncesPatrono    Float    @default(0.02)
+  topeIvssSm         Float    @default(5)
+  topeRpeSm          Float    @default(10)
+  diasUtilidades     Float    @default(30)
+  diasBonoVacMes     Float    @default(2)
+  horasJornada       Float    @default(8)
+  recargoNocturno    Float    @default(1.3)
+  recargoExtra       Float    @default(1.5)
+  diasMes            Float    @default(30)
+  empresa            Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+
+  @@unique([empresaId, vigenciaDesde])
+}
+
+// El costo se guarda al vender: cambiar recetas después no altera ventas pasadas.
+model Venta {
+  id               String   @id @default(cuid())
+  empresaId        String
+  fecha            DateTime
+  productoId       String
+  cantidad         Float
+  precioUnitario   Float    // sin IVA
+  descuento        Float    @default(0) // monto total
+  exento           Boolean  @default(false)
+  pctIva           Float
+  costoUnitDirecto Float
+  costoUnitTotal   Float
+  empresa          Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  producto         Producto @relation(fields: [productoId], references: [id])
+
+  @@index([empresaId, fecha])
+}
+
+// Pagos de servicios y gastos. Opcionalmente referidos a un costo indirecto registrado.
+model Pago {
+  id          String          @id @default(cuid())
+  empresaId   String
+  fecha       DateTime
+  categoria   String
+  concepto    String
+  monto       Float
+  medio       String          @default("TRANSFERENCIA") // EFECTIVO | TRANSFERENCIA | OTRO
+  comprobante String?
+  indirectoId String?
+  empresa     Empresa         @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  indirecto   CostoIndirecto? @relation(fields: [indirectoId], references: [id], onDelete: SetNull)
+
+  @@index([empresaId, fecha])
+}
+
+model CuentaContable {
+  id        String        @id @default(cuid())
+  empresaId String
+  nombre    String
+  tipo      String        // ACTIVO | PASIVO | PATRIMONIO
+  empresa   Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  saldos    SaldoCuenta[]
+
+  @@unique([empresaId, nombre])
+}
+
+model SaldoCuenta {
+  id        String         @id @default(cuid())
+  cuentaId  String
+  periodo   String         // AAAA-MM
+  monto     Float
+  cuenta    CuentaContable @relation(fields: [cuentaId], references: [id], onDelete: Cascade)
+
+  @@unique([cuentaId, periodo])
+}

@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# base de datos local y secretos
+/prisma/*.db
+/prisma/*.db-journal
+.env
+
+# credenciales de prueba locales
+/ACCESO-PRUEBA.txt
+
+# archivos locales de herramientas (rutas de este equipo)
+/.claude/
+/.impeccable/hook.cache.json
+/.impeccable/mocks/
+/.impeccable/questions/
+/.impeccable/review/

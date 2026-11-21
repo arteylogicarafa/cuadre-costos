@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T00:00:00Z",
+  "title": "Design System: Cuadre",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Tinta de Grabado Verde", "canonical": "#0f7a3e", "tonalRamp": ["#04180c", "#073d1f", "#0a6330", "#0f7a3e", "#2f9a5c", "#6dbd8b", "#b3dcc2", "#e4f3ea"] },
+      "accent-strong": { "role": "primary", "displayName": "Verde Profundo", "canonical": "#0a6330", "tonalRamp": ["#04180c", "#073d1f", "#0a6330", "#0f7a3e", "#2f9a5c", "#6dbd8b", "#b3dcc2", "#e4f3ea"] },
+      "accent-ink": { "role": "primary", "displayName": "Verde de Texto", "canonical": "#0b5a2c", "tonalRamp": ["#04180c", "#073d1f", "#0b5a2c", "#0f7a3e", "#2f9a5c", "#6dbd8b", "#b3dcc2", "#e4f3ea"] },
+      "paper": { "role": "neutral", "displayName": "Papel Verde", "canonical": "#f1f6ef", "tonalRamp": ["#0a1d11", "#364f3e", "#52695a", "#aabfa8", "#d0ddcc", "#e1ebdd", "#e8f0e5", "#f1f6ef"] },
+      "plate": { "role": "neutral", "displayName": "Placa", "canonical": "#ffffff", "tonalRamp": ["#0a1d11", "#364f3e", "#52695a", "#aabfa8", "#d0ddcc", "#e8f0e5", "#f1f6ef", "#ffffff"] },
+      "ink": { "role": "neutral", "displayName": "Tinta", "canonical": "#0a1d11", "tonalRamp": ["#0a1d11", "#1c3224", "#364f3e", "#52695a", "#7d927f", "#aabfa8", "#d0ddcc", "#f1f6ef"] },
+      "bad": { "role": "state", "displayName": "Rojo de Pérdida", "canonical": "#b42318", "tonalRamp": ["#3a0d08", "#6b150d", "#8f1c12", "#b42318", "#d4574b", "#e88f86", "#f5c6c1", "#fbe9e7"] },
+      "warn": { "role": "state", "displayName": "Ámbar de Aviso", "canonical": "#84500a", "tonalRamp": ["#2b1a03", "#523106", "#84500a", "#a8670a", "#c98a2e", "#e0b062", "#f0d4a0", "#faf0dc"] },
+      "night-accent": { "role": "primary", "displayName": "Tinta de Grabado Verde (oscuro)", "canonical": "#1fd16b", "tonalRamp": ["#03110a", "#0a3a1f", "#0f6b36", "#17a553", "#1fd16b", "#46eb89", "#8ef3b6", "#d3fbe3"] },
+      "night-paper": { "role": "neutral", "displayName": "Negro Verdoso", "canonical": "#050907", "tonalRamp": ["#050907", "#070d09", "#0b120d", "#122018", "#1b2c21", "#2b4535", "#7e9985", "#e6f4ea"] }
+    },
+    "typographyMeta": {
+      "display-figure": { "displayName": "Cifra de placa", "purpose": "Utilidad neta del mes; numeral de grabado, lining y tabular." },
+      "figure-medium": { "displayName": "Cifra de panel", "purpose": "Costo unitario promedio y otros titulares numéricos de panel." },
+      "headline": { "displayName": "Título de página", "purpose": "h1 de cada pantalla, en Bodoni." },
+      "title": { "displayName": "Título de panel", "purpose": "h2 de paneles, 14px semibold." },
+      "body": { "displayName": "Cuerpo", "purpose": "Texto de interfaz, filas y formularios con numerales tabulares." },
+      "label": { "displayName": "Etiqueta", "purpose": "Botones secundarios, selector de tema, cabeceras de tabla." },
+      "caption": { "displayName": "Apoyo", "purpose": "Ejes, leyendas y títulos de grupo del menú." }
+    },
+    "shadows": [
+      { "name": "placa-baseline", "value": "0 1px 0 0 var(--line)", "purpose": "Línea inferior de la placa principal; no es sombra difusa." },
+      { "name": "tooltip-float", "value": "0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2)", "purpose": "Único elemento flotante: tooltip del gráfico bajo el puntero." },
+      { "name": "focus-glow", "value": "0 0 0 3px var(--glow)", "purpose": "Halo de foco de campos, acento al 10%." }
+    ],
+    "motion": [
+      { "name": "ease-state", "value": "120ms ease-out", "purpose": "Hover y cambio de color de botones, enlaces, filas y campos." },
+      { "name": "ease-entra", "value": "420ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entrada de bloques con 6px de desplazamiento y fundido." },
+      { "name": "traza", "value": "1500ms cubic-bezier(0.16, 1, 0.3, 1) 150ms", "purpose": "La línea de ingresos se traza como un buril; el resto aparece en 700ms tras 900ms." },
+      { "name": "deriva", "value": "300s linear infinite", "purpose": "Rotación casi imperceptible de la roseta del panel de acceso." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción primaria de la pantalla, una sola; ícono a la izquierda.",
+      "html": "<button class=\"ds-btn-primary\">+ Registrar venta</button>",
+      "css": ".ds-btn-primary { background: var(--accent, #0f7a3e); color: var(--on-accent, #fff); padding: 8px 16px; border: 0; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 120ms ease-out; } .ds-btn-primary:hover { background: var(--accent-strong, #0a6330); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #0f7a3e); outline-offset: 2px; }"
+    },
+    {
+      "name": "Meta Chip",
+      "kind": "chip",
+      "refersTo": "chip-meta",
+      "description": "Enlace en píldora con moneda y tasa; acción secundaria de la cabecera.",
+      "html": "<a class=\"ds-chip\" href=\"#\">VES · tasa 36,50</a>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; padding: 6px 12px; border: 1px solid var(--line, #d0ddcc); border-radius: 9999px; background: var(--surface, #fff); color: var(--ink-2, #364f3e); font-size: 12px; text-decoration: none; transition: background-color 120ms ease-out; } .ds-chip:hover { background: var(--hover, #e1ebdd); } .ds-chip:focus-visible { outline: 2px solid var(--accent, #0f7a3e); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Campo con etiqueta encima, borde fuerte y halo de acento al enfocar.",
+      "html": "<label class=\"ds-field\"><span>Precio</span><input value=\"12,50\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 4px; font-size: 14px; } .ds-field span { color: var(--ink-2, #364f3e); } .ds-field input { padding: 8px 12px; border: 1px solid var(--line-strong, #aabfa8); border-radius: 8px; background: var(--field, #fff); color: var(--ink, #0a1d11); font: inherit; transition: border-color 120ms ease-out, box-shadow 120ms ease-out; } .ds-field input:focus { outline: none; border-color: var(--accent, #0f7a3e); box-shadow: 0 0 0 3px var(--glow, rgb(15 122 62 / 0.1)); }"
+    },
+    {
+      "name": "Sidebar Nav",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Menú agrupado; el elemento activo se rellena con el acento.",
+      "html": "<nav class=\"ds-nav\"><p class=\"ds-nav-group\">Costeo</p><a class=\"ds-nav-item\" href=\"#\">Productos</a><a class=\"ds-nav-item ds-on\" aria-current=\"page\" href=\"#\">Resumen</a></nav>",
+      "css": ".ds-nav { display: flex; flex-direction: column; gap: 2px; width: 220px; } .ds-nav-group { margin: 0 0 4px; padding: 0 12px; font-size: 11px; font-weight: 600; color: var(--ink-3, #52695a); } .ds-nav-item { padding: 6px 12px; border-radius: 8px; font-size: 14px; color: var(--ink-2, #364f3e); text-decoration: none; transition: background-color 120ms ease-out, color 120ms ease-out; } .ds-nav-item:hover { background: var(--hover, #e1ebdd); color: var(--ink, #0a1d11); } .ds-nav-item.ds-on { background: var(--accent, #0f7a3e); color: var(--on-accent, #fff); font-weight: 500; } .ds-nav-item:focus-visible { outline: 2px solid var(--accent, #0f7a3e); outline-offset: 2px; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Contenedor estándar: borde de línea, 16px de esquina, título de 14px.",
+      "html": "<section class=\"ds-panel\"><h2>Punto de equilibrio</h2><p>Necesitas vender <b>420</b> de tus <span>610</span> unidades al mes.</p></section>",
+      "css": ".ds-panel { padding: 24px; border: 1px solid var(--line, #d0ddcc); border-radius: 16px; background: var(--surface, #fff); color: var(--ink-2, #364f3e); font-size: 14px; } .ds-panel h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--ink, #0a1d11); } .ds-panel b { color: var(--ink, #0a1d11); font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Placa de utilidad",
+      "kind": "custom",
+      "refersTo": "placa",
+      "description": "Placa principal: borde de acento, trama de ondas con zona limpia, cifra en Bodoni.",
+      "html": "<section class=\"ds-placa\"><svg class=\"ds-ondas\" viewBox=\"0 0 480 120\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"var(--engrave, rgb(15 122 62 / .34))\" stroke-width=\"1\"><path d=\"M0 30Q60 10 120 30T240 30T360 30T480 30\" vector-effect=\"non-scaling-stroke\"/><path d=\"M0 50Q60 30 120 50T240 50T360 50T480 50\" vector-effect=\"non-scaling-stroke\"/><path d=\"M0 70Q60 50 120 70T240 70T360 70T480 70\" vector-effect=\"non-scaling-stroke\"/><path d=\"M0 90Q60 70 120 90T240 90T360 90T480 90\" vector-effect=\"non-scaling-stroke\"/></g></svg><div class=\"ds-clean\"></div><div class=\"ds-content\"><p class=\"ds-eti\">Utilidad neta de noviembre de 2026</p><p class=\"ds-cifra\">12.480,00<span>VES</span></p></div></section>",
+      "css": ".ds-placa { position: relative; overflow: hidden; min-height: 160px; padding: 32px; border: 1px solid color-mix(in srgb, var(--accent, #0f7a3e) 45%, transparent); border-radius: 16px; background: var(--surface, #fff); } .ds-ondas { position: absolute; inset: 0; width: 100%; height: 100%; } .ds-clean { position: absolute; inset: 0; background: radial-gradient(ellipse 58% 30% at 26% 24%, var(--surface, #fff) 38%, transparent 100%); } .ds-content { position: relative; } .ds-eti { margin: 0; font-size: 14px; color: var(--ink-2, #364f3e); } .ds-cifra { margin: 4px 0 0; font-family: 'Bodoni Moda', 'Bodoni 72', Georgia, serif; font-size: 60px; font-weight: 600; line-height: 1; letter-spacing: -0.015em; font-variant-numeric: lining-nums tabular-nums; color: var(--ink, #0a1d11); } .ds-cifra span { margin-left: 8px; font-family: system-ui, sans-serif; font-size: 18px; font-weight: 500; color: var(--ink-3, #52695a); }"
+    },
+    {
+      "name": "Barra de margen",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "Fila de producto: nombre, barra de píldora en acento, porcentaje y precio tabulares.",
+      "html": "<div class=\"ds-fila\"><span class=\"ds-nombre\">Pan canilla</span><span class=\"ds-pista\"><span class=\"ds-rel\" style=\"width:62%\"></span></span><span class=\"ds-val\"><b>62%</b> · 4,20</span></div>",
+      "css": ".ds-fila { display: grid; grid-template-columns: 9rem 1fr auto; align-items: center; gap: 12px; font-size: 14px; } .ds-nombre { color: var(--ink, #0a1d11); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ds-pista { height: 8px; overflow: hidden; border-radius: 9999px; background: var(--hover, #e1ebdd); } .ds-rel { display: block; height: 100%; border-radius: 9999px; background: var(--accent, #0f7a3e); } .ds-val { width: 112px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2, #364f3e); } .ds-val b { font-weight: 500; color: var(--ink, #0a1d11); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Billete Digital",
+    "overview": "La interfaz es un billete de bolívar de la era digital: el dinero se lee como grabado de seguridad. Una sola jugada lleva la identidad, la trama guilloché (rosetas y bandas de ondas de línea fina generadas en SVG), y aparece en tres sitios: la marca, el fondo de las placas de cifras y el panel de acceso. Todo lo demás es interfaz de trabajo callada, hecha para un dueño de pyme que decide precios con cifras mensuales: escritorio a diario, móvil para consultar.\n\nDos temas comparten una sola escala tonal con la misma estructura de roles. El claro es papel verde pálido con tinta verde profundo y placas blancas; el oscuro es negro verdoso con tinta de grabado verde vivo. El rojo y el ámbar significan estado y nada más. La jerarquía la dan la cifra grande en serif de grabado, el tamaño de título y el borde tintado de la placa principal, no el color decorativo.\n\nEl dashboard no es un arreglo de tarjetas iguales con ícono, número y etiqueta: hay una placa ancha dominante con la utilidad neta y el gráfico, paneles secundarios con barras y listas, y los números siempre alineables.",
+    "keyCharacteristics": [
+      "Una trama guilloché, a un píxel de grosor, baja opacidad, siempre detrás del contenido y con zona limpia donde van los números.",
+      "Cifras principales en Bodoni Moda con numerales lining y tabulares; interfaz en Geist.",
+      "Verde de acento único, escala tonal compartida por ambos temas, tema fijado en <html data-tema>.",
+      "Plano por defecto: profundidad por borde y tono, no por sombra.",
+      "Movimiento mínimo y con significado: el buril que traza la línea de ingresos, la entrada suave, la roseta que deriva muy despacio."
+    ],
+    "rules": [
+      { "name": "The Single Engraving Rule", "body": "La trama guilloché es la única jugada de identidad. No se añaden degradados, brillos ni otras texturas; la trama nunca cubre texto sin zona limpia.", "section": "colors" },
+      { "name": "The Status Only Rule", "body": "Rojo y ámbar significan estado. Un valor negativo se pinta en rojo; una acción nunca.", "section": "colors" },
+      { "name": "The Shared Ramp Rule", "body": "Claro y oscuro usan los mismos roles con los mismos nombres; un componente referencia el rol, nunca un hex.", "section": "colors" },
+      { "name": "The Engraved Figure Rule", "body": "Todo número que sea el titular de una placa o panel usa cifra (Bodoni, lining, tabular). Los números dentro de listas, tablas y ejes usan Geist tabular.", "section": "typography" },
+      { "name": "The Aligned Numerals Rule", "body": "Toda columna o fila de cifras lleva tabular-nums; una cifra que se desalinea al cambiar es un defecto.", "section": "typography" },
+      { "name": "The Flat Plate Rule", "body": "Las superficies son planas en reposo. Una sombra aparece solo en un elemento flotante que responde al puntero, nunca como relieve de panel, y nunca dura ni desplazada.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do poner la trama guilloché solo detrás de placas de cifras, de la marca y del panel de acceso, a 1px y con el color Grabado, dejando zona limpia bajo el texto.",
+      "Do usar cifra para el número titular de cada placa y tabular-nums en toda cifra alineable.",
+      "Do referenciar roles de color (bg-surface, text-ink-2, bg-accent), nunca hex, para que ambos temas funcionen.",
+      "Do reservar el acento para la acción primaria, el elemento activo, el dato principal y el foco.",
+      "Do dar a todo gráfico una tabla o resumen accesible equivalente y respetar prefers-reduced-motion.",
+      "Do mantener objetivos táctiles de 44px en móvil."
+    ],
+    "donts": [
+      "Don't componer el dashboard como una rejilla de tarjetas idénticas con ícono, número y etiqueta.",
+      "Don't usar sombras duras, desplazadas ni brillos; la sombra blanda se limita al tooltip flotante.",
+      "Don't usar rojo o ámbar como decoración o como serie: son estado.",
+      "Don't extender la trama a texto corrido, tablas o formularios.",
+      "Don't pintar una cifra grande en Geist; el serif de grabado es lo que hace legible el dinero como objeto.",
+      "Don't añadir un segundo acento: las series teal, ámbar y violeta solo separan partes de un todo."
+    ]
+  }
+}
